@@ -5,6 +5,7 @@ class Instagram:
     def __init__(self, username):
         self.username = username
         self.loader = instaloader.Instaloader()
+        self.loader.load_session_from_file(self.username)
         self.profile = instaloader.Profile.from_username(self.loader.context,self.username)
         open('followers.txt', 'w').close()
         open('following.txt', 'w').close()
