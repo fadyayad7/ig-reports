@@ -1,4 +1,3 @@
-from typing import OrderedDict
 from dotenv import dotenv_values
 from Instagram import Instagram
 

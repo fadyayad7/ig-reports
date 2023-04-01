@@ -7,6 +7,8 @@ class Instagram:
         self.loader = instaloader.Instaloader()
         self.loader.load_session_from_file(self.username)
         self.profile = instaloader.Profile.from_username(self.loader.context,self.username)
+        self.followers = self.profile.get_followers()
+        self.followees = self.profile.get_followees()
         open('followers.txt', 'w').close()
         open('following.txt', 'w').close()
         open('not_following_back.txt', 'w').close()
@@ -16,7 +18,7 @@ class Instagram:
         return self.loader.load_session_from_file(self.username)
 
     def getFollowers(self):
-        for followers in self.profile.get_followers():
+        for followers in self.followers:
             with open("followers.txt","a+") as f:
                 f.write(followers.username+'\n')
         
@@ -24,15 +26,15 @@ class Instagram:
 
 
     def getFollowing(self):
-        for followees in self.profile.get_followees():
+        for followees in self.followees:
             with open("following.txt","a+") as f:
                 f.write(followees.username+'\n')
 
         print("Writing followees...")
 
     def getNotFollowingBack(self):
-        followers = [follower.username for follower in self.profile.get_followers()]
-        following = [followee.username for followee in self.profile.get_followees()]
+        followers = [follower.username for follower in self.followers]
+        following = [followee.username for followee in self.followees]
         notFollowingBack = [nfb for nfb in following if nfb not in followers]
 
         for nfb in notFollowingBack:
